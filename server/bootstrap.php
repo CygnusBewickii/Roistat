@@ -1,18 +1,33 @@
 <?php
 
-use AmoCRM\Client\AmoCRMApiClient;
-use Symfony\Component\Dotenv\Dotenv;
+// use AmoCRM\Client\AmoCRMApiClient;
+// use Symfony\Component\Dotenv\Dotenv;
 
-include_once __DIR__ . '/vendor/autoload.php';
+// include_once __DIR__ . '/vendor/autoload.php';
 
-$dotenv = new Dotenv();
-$dotenv->load(__DIR__ . '/.env.dist', __DIR__ . '/.env');
+// $dotenv = new Dotenv();
+// $dotenv->load(__DIR__ . '/.env.dist', __DIR__ . '/.env');
 
-$clientId = $_ENV['CLIENT_ID'];
-$clientSecret = $_ENV['CLIENT_SECRET'];
-$redirectUri = $_ENV['CLIENT_REDIRECT_URI'];
+// $clientId = $_ENV['CLIENT_ID'];
+// $clientSecret = $_ENV['CLIENT_SECRET'];
+// $redirectUri = $_ENV['CLIENT_REDIRECT_URI'];
 
-$apiClient = new AmoCRMApiClient($clientId, $clientSecret, $redirectUri);
+// $apiClient = new AmoCRMApiClient($clientId, $clientSecret, $redirectUri);
 
-include_once __DIR__ . '/token_actions.php';
-include_once __DIR__ . '/error_printer.php';
+// include_once __DIR__ . '/token_actions.php';
+// include_once __DIR__ . '/error_printer.php';
+
+include __DIR__ . './AmoCRM/AmoConnector.php';
+$config = require './config.php';
+
+$clientId = $config->client_id;
+$clientSecret = $config->client_secret;
+$code = $config->code;
+$redirectUri = $config->redirect_uri;
+$subdomain = $config->subdomain;
+
+
+$apiClient = new AmoConnector($clientId, $clientSecret, $authCode, $redirectUri, $subdomain);
+
+
+
