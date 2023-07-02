@@ -1,4 +1,5 @@
 import { useState } from "react"
+import axios from 'axios'
 
 function App() {
     const [form, setForm] = useState({
@@ -16,8 +17,18 @@ function App() {
       };
 
 
-    const sendData = (data) => {
-        console.log('');
+    const sendData = (event) => {
+        event.preventDefault(); 
+
+        const formData = new FormData();
+        formData.append('name', form.name);
+        formData.append('email', form.email);
+        formData.append('price', form.price);
+        formData.append('phone', form.phone);
+
+        axios.post('http://server/controller/create_lead.php', formData)
+            .then(response => { console.log(response.data); })
+            .catch(error => { console.error(error); });
     }
 
     return (
@@ -40,7 +51,7 @@ function App() {
                 <br />
                 <input type='number' id='price' name='price' onChange={handleChange} required></input>
                 <br/>
-                <input type='submit' id='submit' name='submit'></input>
+                <input type='submit' id='submit' name='submit' onClick={sendData}></input>
             </form>
         </div>
     )
